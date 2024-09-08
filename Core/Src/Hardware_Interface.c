@@ -9,12 +9,12 @@
 
 extern I2C_HandleTypeDef hi2c1;
 
-uint8_t Read_Data(uint8_t sla, uint8_t *Data, uint8_t Length) {
+uint8_t Read_Hw_Data(uint8_t sla, uint8_t *Data, uint8_t Length) {
 	HAL_StatusTypeDef ok = HAL_I2C_Master_Receive(&hi2c1, sla << 1, Data,
 			Length, 100);
 	return (ok == HAL_OK) ? 1 : 0;
 }
-uint8_t Write_config(uint8_t sla, uint8_t *Data, uint8_t Length) {
+uint8_t Write_HW_config(uint8_t sla, uint8_t *Data, uint8_t Length) {
 	HAL_StatusTypeDef ok = HAL_I2C_Master_Transmit(&hi2c1, sla << 1, Data,
 			Length, 100);
 	return (ok == HAL_OK) ? 1 : 0;

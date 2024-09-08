@@ -55,6 +55,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 ADXL\ 345\ accelerometer.list \
 
+OBJCOPY_HEX += \
+ADXL\ 345\ accelerometer.hex \
+
 
 # All Target
 all: main-build
@@ -63,8 +66,8 @@ all: main-build
 main-build: ADXL\ 345\ accelerometer.elf secondary-outputs
 
 # Tool invocations
-ADXL\ 345\ accelerometer.elf ADXL\ 345\ accelerometer.map: $(OBJS) $(USER_OBJS) D:\EMBEDDED\ MATERIAL\ADXL345_PROJECT\UAV_Navigation_System\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "ADXL 345 accelerometer.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\EMBEDDED MATERIAL\ADXL345_PROJECT\UAV_Navigation_System\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ADXL 345 accelerometer.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+ADXL\ 345\ accelerometer.elf ADXL\ 345\ accelerometer.map: $(OBJS) $(USER_OBJS) C:\Users\asus\OneDrive\ -\ Helwan\ university(Engineering\ Mataria)\Desktop\UAV_Navigation_System\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "ADXL 345 accelerometer.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\asus\OneDrive - Helwan university(Engineering Mataria)\Desktop\UAV_Navigation_System\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ADXL 345 accelerometer.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -78,12 +81,17 @@ ADXL\ 345\ accelerometer.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_T
 	@echo 'Finished building: $@'
 	@echo ' '
 
+ADXL\ 345\ accelerometer.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "ADXL 345 accelerometer.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) ADXL\ 345\ accelerometer.elf ADXL\ 345\ accelerometer.list ADXL\ 345\ accelerometer.map ADXL\\ 345\\ accelerometer.elf default.size.stdout
+	-$(RM) ADXL\ 345\ accelerometer.elf ADXL\ 345\ accelerometer.hex ADXL\ 345\ accelerometer.list ADXL\ 345\ accelerometer.map ADXL\\ 345\\ accelerometer.elf default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

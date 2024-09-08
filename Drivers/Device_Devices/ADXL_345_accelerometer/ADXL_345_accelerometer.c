@@ -7,8 +7,6 @@
 
 #include "ADXL_345_accelerometer.h"
 
-#define ADXL345_SLA 0x53 << 1  // I2C address for ADXL345
-
 typedef enum {
 	OFSX_X = 0x1e, OFSX_Y = 0x1f, OFSX_Z = 0x20,
 } ADXl345_Reg;
@@ -21,9 +19,9 @@ typedef enum {
 adxl345_stat_t ADXL345_Init(adxl345_t *accelerometer) {
 	//Set the device to measurement mode
 	accelerometer->I2C_Buffer[0] = ADXL345_REG_POWER_CTL;
-	accelerometer->I2C_Buffer[1] = (accelerometer->Link
-			| accelerometer->Auto_Sleep | accelerometer->Measure
-			| accelerometer->Sleep | accelerometer->Wakeup) >> 2;
+	accelerometer->I2C_Buffer[1] = (accelerometer->Link << 5)
+			| (accelerometer->Auto_Sleep << 4) | (accelerometer->Measure << 3)
+			| (accelerometer->Sleep << 2) | (accelerometer->Wakeup);
 
 	//transfer the config to the device via I2C write
 
@@ -46,10 +44,10 @@ adxl345_stat_t ADXL345_WriteConfig(adxl345_t *accelerometer) {
 	}
 	//assigning the rate and power mode to BW_RATE reg
 	accelerometer->I2C_Buffer[4] = ADXL345_REG_BW_RATE;
-	accelerometer->I2C_Buffer[5] = (accelerometer->Power_Mode
-			| accelerometer->Data_Rate) >> 3;
+	accelerometer->I2C_Buffer[5] = (accelerometer->Power_Mode << 4)
+			| (accelerometer->Data_Rate);
 
-	if (accelerometer->AG_HW_Interface.Write_config(ADXL345_SLA,
+	if (accelerometer->AG_HW_Interface_t.Write_HW_config(ADXL345_SLA,
 			accelerometer->I2C_Buffer, 8) != 1) {
 		return ADXL345_failed;
 	} else {
@@ -70,12 +68,18 @@ adxl345_stat_t ADXL345_ReadData(adxl345_t *accelerometer, int16_t *x,
 
 	accelerometer->I2C_Buffer[0] = ADXL345_REG_DATAX0;
 
+	if (accelerometer->AG_HW_Interface_t.Read_Hw_Data(ADXL345_SLA,
+			accelerometer->I2C_Buffer, 6) != 1) {
+		return ADXL345_failed;
+	}
+
 	*x = ((int16_t) accelerometer->I2C_Buffer[2] << 8)
 			| accelerometer->I2C_Buffer[1];
 	*y = ((int16_t) accelerometer->I2C_Buffer[4] << 8)
 			| accelerometer->I2C_Buffer[3];
 	*z = ((int16_t) accelerometer->I2C_Buffer[6] << 8)
-			| accelerometer->I2C_Buffer[7];
-	return ADXL345_WriteConfig(accelerometer);
+			| accelerometer->I2C_Buffer[5];
+
+	return ADXL345_success;
 }
 

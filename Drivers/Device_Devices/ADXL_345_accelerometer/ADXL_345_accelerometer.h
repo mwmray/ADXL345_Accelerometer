@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 
+#define ADXL345_SLA 0x53 << 1  // I2C address for ADXL345
 #define ADXL345_REG_DEVID 0x00
 #define ADXL345_REG_BW_RATE 0x2C
 #define ADXL345_REG_POWER_CTL 0x2D
@@ -17,16 +18,13 @@
 #define ADXL345_REG_DATAX0 0x32
 
 typedef struct {
-	uint8_t I2C_Buffer[8];
+	uint8_t I2C_Buffer[10];
 	uint8_t Range :2;
 	uint8_t Data_Rate;
-	float X_Axis;
-	float Y_Axis;
-	float Z_Axis;
 	struct HW_Interface {
-		uint8_t (*Read_Data)(uint8_t sla, uint8_t *Data, uint8_t Length);
-		uint8_t (*Write_config)(uint8_t sla, uint8_t *Data, uint8_t Length);
-	} AG_HW_Interface;
+		uint8_t (*Read_Hw_Data)(uint8_t sla, uint8_t *Data, uint8_t Length);
+		uint8_t (*Write_HW_config)(uint8_t sla, uint8_t *Data, uint8_t Length);
+	} AG_HW_Interface_t;
 	uint8_t Offsets[3];
 	uint8_t Power_Mode :1;
 	uint8_t Link :1;
