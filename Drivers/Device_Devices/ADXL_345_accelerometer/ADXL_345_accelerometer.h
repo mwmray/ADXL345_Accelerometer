@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-#define ADXL345_SLA 0x53 << 1  // I2C address for ADXL345
+#define ADXL345_SLA 0x53 >> 1  // I2C address for ADXL345
 #define ADXL345_REG_DEVID 0x00
 #define ADXL345_REG_BW_RATE 0x2C
 #define ADXL345_REG_POWER_CTL 0x2D
@@ -18,9 +18,13 @@
 #define ADXL345_REG_DATAX0 0x32
 
 typedef struct {
-	uint8_t I2C_Buffer[10];
+	uint8_t I2C_Buffer[6];
 	uint8_t Range :2;
 	uint8_t Data_Rate;
+	uint8_t Resolution :1;
+	float X_Axis;
+	float Y_Axis;
+	float Z_Axis;
 	struct HW_Interface {
 		uint8_t (*Read_Hw_Data)(uint8_t sla, uint8_t *Data, uint8_t Length);
 		uint8_t (*Write_HW_config)(uint8_t sla, uint8_t *Data, uint8_t Length);
@@ -70,7 +74,6 @@ typedef enum {
 
 adxl345_stat_t ADXL345_Init(adxl345_t *accelerometer);
 adxl345_stat_t ADXL345_WriteConfig(adxl345_t *accelerometer);
-adxl345_stat_t ADXL345_ReadData(adxl345_t *accelerometer, int16_t *x,
-		int16_t *y, int16_t *z);
+adxl345_stat_t ADXL345_ReadData(adxl345_t *accelerometer);
 
 #endif /* DEVICE_DEVICES_ADXL_345_ACCELEROMETER_H_ */
