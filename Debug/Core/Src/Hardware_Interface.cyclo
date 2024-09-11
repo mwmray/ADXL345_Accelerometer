@@ -1,2 +1,2 @@
-../Core/Src/Hardware_Interface.c:19:9:Read_Hw_Data	1
-../Core/Src/Hardware_Interface.c:32:9:Write_HW_config	1
+../Core/Src/Hardware_Interface.c:20:9:Read_Hw_Data	1
+../Core/Src/Hardware_Interface.c:35:9:Write_HW_config	1

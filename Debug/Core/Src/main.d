@@ -22,6 +22,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Src/../../Drivers/Device_Devices/ADXL_345_accelerometer/ADXL_345_accelerometer.h \
  ../Core/Src/../../Drivers/Device_Devices/HD44780_LCD/HD44780_LCD.h \
  ../Core/Src/../../Drivers/Device_Devices/HD44780_LCD/../../ARM_Drivers/Delay_Micros/dwt_stm32_delay.h \
@@ -50,6 +51,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 ../Core/Src/../../Drivers/Device_Devices/ADXL_345_accelerometer/ADXL_345_accelerometer.h:
 ../Core/Src/../../Drivers/Device_Devices/HD44780_LCD/HD44780_LCD.h:
 ../Core/Src/../../Drivers/Device_Devices/HD44780_LCD/../../ARM_Drivers/Delay_Micros/dwt_stm32_delay.h:

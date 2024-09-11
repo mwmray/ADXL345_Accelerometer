@@ -16,6 +16,7 @@ typedef enum {
 /// Initializing the ADXL345 accelerometer
 /// @param accelerometer ptr to the accelerometer handle
 /// @return ADXL345_success if successful
+
 adxl345_stat_t ADXL345_Init(adxl345_t *accelerometer) {
 	//Set the device to measurement mode
 	accelerometer->I2C_Buffer[0] = ADXL345_REG_POWER_CTL;
@@ -85,7 +86,7 @@ adxl345_stat_t ADXL345_ReadData(adxl345_t *accelerometer) {
 	if (t != ADXL345_success) {
 		return t;
 	}
-
+	//read data of axes
 	accelerometer->AG_HW_Interface_t.Read_Hw_Data(ADXL345_SLA,
 			accelerometer->I2C_Buffer, 6);
 	// Convert the data to 16-bit integers (signed)
@@ -96,7 +97,6 @@ adxl345_stat_t ADXL345_ReadData(adxl345_t *accelerometer) {
 	accelerometer->Z_Axis = ((int16_t) accelerometer->I2C_Buffer[5] << 8)
 			| accelerometer->I2C_Buffer[4];
 
-	//read data of axes
 	return t;
 }
 

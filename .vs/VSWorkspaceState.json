@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Core",
+    "\\Drivers",
+    "\\Drivers\\Device_Devices",
+    "\\Drivers\\Device_Devices\\ADXL_345_accelerometer"
+  ],
+  "SelectedNode": "\\Drivers\\Device_Devices\\ADXL_345_accelerometer\\ADXL_345_accelerometer.c",
+  "PreviewInSolutionExplorer": false
+}
