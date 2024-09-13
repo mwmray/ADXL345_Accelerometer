@@ -13,7 +13,7 @@ extern I2C_HandleTypeDef hi2c1;
 /// @fn uint8_t Read_Hw_Data(uint8_t, uint8_t*, uint8_t)
 /// @brief
 /// A hardware interface function that uses I2C com protocol to receive data
-/// @param sla
+/// @param sla 		//slave address
 /// @param Data
 /// @param Length
 /// @return 1 if acknowledgment received
@@ -28,7 +28,7 @@ uint8_t Read_Hw_Data(uint8_t sla, uint8_t *Data, uint8_t Length) {
 /// @fn uint8_t Write_HW_config(uint8_t, uint8_t*, uint8_t)
 /// @brief
 /// A hardware interface function that uses I2C com protocol to send data
-/// @param sla
+/// @param sla		//slave address
 /// @param Data
 /// @param Length
 /// @return  1 if acknowledgment receivedi

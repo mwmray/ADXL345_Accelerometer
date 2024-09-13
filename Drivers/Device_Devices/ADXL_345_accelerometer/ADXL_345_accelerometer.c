@@ -79,23 +79,27 @@ adxl345_stat_t ADXL345_ReadData(adxl345_t *accelerometer) {
 	// Read 6 bytes from the data registers (0x32 to 0x37)
 	accelerometer->I2C_Buffer[0] = ADXL345_REG_DATAX0;
 
-	//apply data
+	//Apply data
 	t = accelerometer->AG_HW_Interface_t.Write_HW_config(ADXL345_SLA,
 			accelerometer->I2C_Buffer, 1) != 1 ?
 			ADXL345_failed : ADXL345_success;
 	if (t != ADXL345_success) {
 		return t;
 	}
-	//read data of axes
+	//Read data of axes
 	accelerometer->AG_HW_Interface_t.Read_Hw_Data(ADXL345_SLA,
 			accelerometer->I2C_Buffer, 6);
-	// Convert the data to 16-bit integers (signed)
-	accelerometer->X_Axis = ((int16_t) accelerometer->I2C_Buffer[1] << 8)
+	//Convert the data to 16-bit integers (signed)
+	int16_t x = ( accelerometer->I2C_Buffer[1] << 8)
 			| accelerometer->I2C_Buffer[0];
-	accelerometer->Y_Axis = ((int16_t) accelerometer->I2C_Buffer[3] << 8)
+	int16_t y = ( accelerometer->I2C_Buffer[3] << 8)
 			| accelerometer->I2C_Buffer[2];
-	accelerometer->Z_Axis = ((int16_t) accelerometer->I2C_Buffer[5] << 8)
+	int16_t z = ( accelerometer->I2C_Buffer[5] << 8)
 			| accelerometer->I2C_Buffer[4];
+	//Convert into g values
+	accelerometer->X_Axis = (float)	x / 128;
+	accelerometer->Y_Axis = (float) y / 128;
+	accelerometer->Z_Axis = (float) z / 128;
 
 	return t;
 }
